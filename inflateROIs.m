@@ -1,4 +1,4 @@
-function [] = inflateROIs
+function [] = inflateROIs()
 
 if ~isdeployed
     disp('loading path')
@@ -40,4 +40,4 @@ for rr = 1:length(rois)
 end
 
 exit;
-end;
+end
