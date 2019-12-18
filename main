@@ -1,0 +1,14 @@
+#!/bin/bash
+
+time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/inflateROIs.m
+
+time singularity exec -e docker://brainlife/fsl:5.0.9 ./computeVolumeROI.sh
+
+echo $FREESURFER_LICENSE > license.txt
+time singularity exec -e -B `pwd`/license.txt:/usr/local/freesurfer/license.txt docker://brainlife/freesurfer:6.0.0 ./vol2vol_freesurfer.sh
+
+time singularity exec -e docker://brainlife/fsl:5.0.9 ./fslanalysis.sh
+
+mv *.nii.gz ./raw/
+mv *.txt* ./raw/
+exit 0
